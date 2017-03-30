@@ -30,7 +30,7 @@ fs.open(process.argv[3], "w", (err, fd) => {
                 csv()
                     .fromFile(process.argv[2])
                     .on('json', (entryCsv) => {
-
+                    
                     const jsonEntry = {
                         serviceId: process.argv[4],
                         year: process.argv[5],
@@ -47,16 +47,16 @@ fs.open(process.argv[3], "w", (err, fd) => {
                             if (value.length)
                                 jsonEntry.skill = value;
                             else jsonEntry.skill = NO_SKILL;
+
+                            const jsonStr = JSON.stringify(jsonEntry)+"\n";
+                            fs.writeFileSync(process.argv[3], jsonStr, {flag: "a"}, (err) => {
+                                if(err) {
+                                    console.log(err);
+                                    process.exit(1);
+                                }
+                            });
                         }
                     });
-                    
-                    const jsonStr = JSON.stringify(jsonEntry)+"\n";
-                    fs.writeFileSync(process.argv[3], jsonStr, {flag: "a"}, (err) => {
-                        if(err) {
-                            console.log(err);
-                            process.exit(1);
-                        }
-                    })
                 })
                 .on("done", (error) => {
                     console.log("Done processing.");
