@@ -8,13 +8,6 @@ if (process.argv.length < 5) {
     process.exit(1);
 }
 
-// Non workforce types
-const typeList = [
-    "conditionType",
-    "condition",
-    "function",
-];
-
 fs.open(process.argv[3], "w", (err, fd) => {
     if (err) {
         console.log(err);
